@@ -20,13 +20,11 @@ sub http_request {
         : {};
 
     my $content = '';
-    if ( defined $self->location_constraint
-        && $self->location_constraint eq 'EU' )
-    {
-        $content
-            = "<CreateBucketConfiguration><LocationConstraint>"
-            . $self->location_constraint
-            . "</LocationConstraint></CreateBucketConfiguration>";
+    if ( defined $self->location_constraint && $self->location_constraint ne 'US' ) {
+      $content
+         = "<CreateBucketConfiguration><LocationConstraint>"
+         . $self->location_constraint
+         . "</LocationConstraint></CreateBucketConfiguration>";
     }
 
     return Net::Amazon::S3::HTTPRequest->new(
